@@ -10,7 +10,7 @@ BASE_URL = os.getenv("BASYX_BASE_URL", "http://localhost:8081")
 AAS_REPO = os.getenv("BASYX_AAS_REPO", BASE_URL)
 SM_REPO  = os.getenv("BASYX_SM_REPO",  BASE_URL)
 
-DELEGATE_URL = os.getenv("DELEGATE_URL", "http://localhost:5001/op")
+DELEGATE_URL = os.getenv("DELEGATE_URL", "http://host.docker.internal:5001/op")
 
 AAS_ID       = os.getenv("AAS_ID", "urn:example:aas:demo:1")
 AAS_ID_SHORT = os.getenv("AAS_ID_SHORT", "DemoAAS")
