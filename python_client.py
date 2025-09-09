@@ -3,7 +3,7 @@ import asyncio
 from pyzeebe import ZeebeClient, create_insecure_channel
 
 # Adjust these to your setup
-BPMN_PATH = r"diagram_2.bpmn"
+BPMN_PATH = r"diagram.bpmn"
 PROCESS_ID = "python_process"  # must match <bpmn:process id="my_process" ...> inside the BPMN
 
 async def main():
@@ -16,12 +16,12 @@ async def main():
     print("✅ Deployed:", BPMN_PATH)
 
     # 2) Start a process instance
-    result = await client.run_process(PROCESS_ID, variables={"x": 0})
+    result = await client.run_process(PROCESS_ID)
     print("🚀 Started instance:", result)
 
     # 3) (Optional) Publish a message – only if your BPMN is waiting for it
     #    Ensure your model has a message catch event with name "messageName"
-    await client.publish_message(name="messageName", correlation_key="correlationKey", variables={"foo": "bar"})
+    await client.publish_message(name="messageName", correlation_key="correlationKey")
     print("📬 Message published")
 
     # Cleanly close the channel
