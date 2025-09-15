@@ -1,3 +1,4 @@
 pyzeebe==3.0.4
 basyx-python-sdk==1.2.1
 Flask==3.1.2
+httpx==0.28.1

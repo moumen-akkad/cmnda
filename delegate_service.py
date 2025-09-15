@@ -17,22 +17,40 @@ def health():
     return jsonify({"status": "ok"}), 200
 
 @app.route("/op", methods=["POST"])
+@app.route("/op", methods=["POST"])
 def delegated_operation():
     data = request.get_json(force=True, silent=True) or {}
     print(f"Received delegated operation call with data: {data}")
-    if "pumpValue" not in data:
-        return jsonify({"error": "pumpValue is required in JSON body"}), 400
 
-    pump_value = data["pumpValue"]
+    pump_value = None
 
-    # Prepare JSON body for BaSyx: /value expects the raw JSON value (number/string/bool)
+    # Case 1: AAS-style input arguments (list of dicts)
+    if isinstance(data, list):
+        try:
+            # Find the property argument with idShort = pumpValue (or ExamplePropertyInput)
+            for arg in data:
+                val = arg.get("value", {})
+                if val.get("idShort") in ("pumpValue", "ExamplePropertyInput"):
+                    pump_value = val.get("value")
+                    break
+        except Exception as e:
+            return jsonify({"error": f"Invalid input argument structure: {e}"}), 400
+
+    # Case 2: Simple JSON body {"pumpValue": "123"}
+    elif isinstance(data, dict) and "pumpValue" in data:
+        pump_value = data["pumpValue"]
+
+    if pump_value is None:
+        return jsonify({"error": "pumpValue (or ExamplePropertyInput) not found in request"}), 400
+
+    # Prepare JSON body for BaSyx: /value expects the raw JSON value
     try:
         body = json.dumps(pump_value)
-        print(body)
         headers = {"Content-Type": "application/json"}
-        basyx_resp = requests.patch(BASYX_PUMP_VALUE_URL, data=body, headers=headers, timeout=5)
+        basyx_resp = requests.patch(
+            BASYX_PUMP_VALUE_URL, data=body, headers=headers, timeout=5
+        )
 
-        # If BaSyx returns not-2xx, surface that upstream
         if not basyx_resp.ok:
             return jsonify({
                 "message": "BaSyx update failed",

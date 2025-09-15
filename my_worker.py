@@ -9,7 +9,19 @@ DELEGATE_URL = os.getenv("DELEGATE_URL", "http://localhost:8081/submodels/dXJuOm
 async def call_delegate(pump_value: int) -> dict:
     async with httpx.AsyncClient(timeout=5.0) as client:
         # Send pumpValue in JSON to the delegated operation
-        resp = await client.post(DELEGATE_URL, json={"pumpValue": pump_value})
+        body_json = {
+                    "inputArguments": [
+                        { "value": 
+                        {"modelType": "Property",
+                        "value": f"{pump_value}", 
+                        "valueType": "xs:string",
+                        "idShort": "ExamplePropertyInput"
+                        }}
+                    ],
+                    "inoutputArguments": [],
+                    "outputArguments": []
+                    }
+        resp = await client.post(DELEGATE_URL, json=body_json)
         resp.raise_for_status()
         return resp.json()
 
