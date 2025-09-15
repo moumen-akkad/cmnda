@@ -49,7 +49,22 @@ submodel_json = {
                     "kind": "ConceptQualifier",
                     "value": DELEGATE_URL
                 }
-            ]
+            ],
+            "inputVariables": [
+                        {
+                            "value": {
+                                "idShort": "ExamplePropertyInput",
+                                "modelType": "Property",
+                                "valueType": "xs:string"
+                            }
+                        }
+                    ]
+        },
+        {
+            "modelType": "Property",
+            "idShort": "pumpValue",
+            "valueType": "xs:string",
+            "value": ""
         }
     ]
 }

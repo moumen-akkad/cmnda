@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
-  xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1"
-  targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1"
-  modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
   <bpmn:process id="python_process" name="Python Process" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Start" />
-    <bpmn:serviceTask id="ServiceTask_Python" name="Call Python Worker">
+    <bpmn:serviceTask id="ServiceTask_Python" name="Update Pump Value">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="python_task" retries="3" />
         <zeebe:ioMapping>
-          <zeebe:input source="=name" target="name" />
+          <zeebe:input source="=name" target="pumpValue" />
           <zeebe:output source="=result" target="result" />
         </zeebe:ioMapping>
       </bpmn:extensionElements>
@@ -30,14 +23,15 @@
           <dc:Bounds x="166" y="146" width="25" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_Python_di" bpmnElement="ServiceTask_Python">
+        <dc:Bounds x="260" y="85" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
         <dc:Bounds x="420" y="110" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="428" y="146" width="20" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_Python_di" bpmnElement="ServiceTask_Python">
-        <dc:Bounds x="260" y="85" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="flow1_di" bpmnElement="flow1">
         <di:waypoint x="196" y="127" />

@@ -13,16 +13,16 @@ async def main():
 
     # 1) Deploy the model (do this before starting instances)
     await client.deploy_process(BPMN_PATH)
-    print("✅ Deployed:", BPMN_PATH)
+    print("Deployed:", BPMN_PATH)
 
     # 2) Start a process instance
     result = await client.run_process(PROCESS_ID)
-    print("🚀 Started instance:", result)
+    print("Started instance:", result)
 
     # 3) (Optional) Publish a message – only if your BPMN is waiting for it
     #    Ensure your model has a message catch event with name "messageName"
     await client.publish_message(name="messageName", correlation_key="correlationKey")
-    print("📬 Message published")
+    print("Message published")
 
     # Cleanly close the channel
     await channel.close()
