@@ -5,7 +5,9 @@
 # 3.0 run docker compose up -d to start basyx
 # 3 run aas.py to create basyx aas and submodel 
 
-# 4 run python_cliet to deploy diagram.bpmn
+# 4.0 run delegate_service to start endpoint server
+
+# 4 run python_client to deploy diagram.bpmn
 
 # 5 open localhost:8080 to access operate on the browser
 
